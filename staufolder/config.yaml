@@ -1,0 +1,35 @@
+cookie:
+  expiry_days: 0
+  key: 630602Aa
+  name: excel_app
+credentials:
+  usernames:
+    admin2@gmail.com:
+      name: Admin User
+      password: $2b$12$hrfxiGbteAMCH9i34op.MO6NEAwDsmKSYujOFDusyiCHepMktCVjS
+      role: admin
+    ben10@gmail.com:
+      name: Ben 10
+      password: $2b$12$UU8A9NYnfefp768EIB3zPunKXEgv2YWrwM.Z6MGKE9LN2xaWs/6HS
+      role: user
+    test10@gmail.com:
+      name: Test10
+      password: $2b$12$BuIU29nLwQ2N51RxmHMbduddDXtBJYyQGRuT7g6qyD/xFkQcPNzge
+      role: user
+    test123@gmail.com:
+      name: Test123
+      password: $2b$12$Gwl4fB3/gqPukee34d3bb.ln4.DrCAv9vjcKiBjo4fqlrF7MUbRQO
+      role: user
+    user123:
+      mail: ananyanarayan011@gmail.com
+      password: $2b$12$O6S7o.L..ikjO.EHkxyazORnvi6xLrY9mgmiUg9yRCrhoXvV/Mzm6
+      role: user
+    userr123:
+      mail: 0221cs161@niet.co.in
+      name: userr123
+      password: $2b$12$S.9EHajtOGplT7wT3KQ6OO.VstFHJGuBvf4IFa1kTBGFHoyJ5Jery
+      role: user
+    xyz@gmail.com:
+      name: XYZ
+      password: $2b$12$9WFPEgUB2bdeNC/WUWuuc.1j6KU5O4gMZE5q4B1NDh9d5CLUo390W
+      role: user

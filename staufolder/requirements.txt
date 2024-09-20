@@ -1,0 +1,5 @@
+openpyxl
+streamlit
+bcrypt
+pyyaml
+pandas
