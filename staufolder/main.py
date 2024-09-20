@@ -111,12 +111,15 @@ def user_login():
     username, auth_status, email = authenticator.login(location='main', key='user_login')
 
     if auth_status:
-        user_role = config['credentials']['usernames'][username]['role']
-        if user_role == 'user':
-            st.session_state['username'] = username  # Store the username in the session state
-            dashboard()
+        if username in config['credentials']['usernames']:
+            user_role = config['credentials']['usernames'][username]['role']
+            if user_role == 'user':
+                st.session_state['username'] = username  # Store the username in the session state
+                dashboard()
+            else:
+                st.error("Access denied.")
         else:
-            st.error("Access denied.")
+            st.error("Username not found")
     elif auth_status is False:
         st.error("ERROR: Invalid credentials.")
     elif auth_status is None:
