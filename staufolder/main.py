@@ -114,15 +114,14 @@ def user_login():
        if username in config['credentials']['usernames']:
            user_role = config['credentials']['usernames'][username]['role']
           
-else:
-    st.error(f"User '{username}' not found.")
+    else:
+        st.error(f"User '{username}' not found.")
             if user_role == 'user':
                 st.session_state['username'] = username  # Store the username in the session state
                 dashboard()
             else:
                 st.error("Access denied.")
-        else:
-            st.error("Username not found")
+    
     elif auth_status is False:
         st.error("ERROR: Invalid credentials.")
     elif auth_status is None:
