@@ -1,5 +1,7 @@
-openpyxl
 streamlit
+streamlit-authenticator
 bcrypt
 pyyaml
 pandas
+openpyxl
+
