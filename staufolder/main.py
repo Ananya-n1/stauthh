@@ -111,8 +111,11 @@ def user_login():
     username, auth_status, email = authenticator.login(location='main', key='user_login')
 
     if auth_status:
-        if username in config['credentials']['usernames']:
-            user_role = config['credentials']['usernames'][username]['role']
+       if username in config['credentials']['usernames']:
+           user_role = config['credentials']['usernames'][username]['role']
+          
+else:
+    st.error(f"User '{username}' not found.")
             if user_role == 'user':
                 st.session_state['username'] = username  # Store the username in the session state
                 dashboard()
