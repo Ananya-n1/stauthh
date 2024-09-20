@@ -29,7 +29,6 @@ def load_credentials():
         config = yaml.safe_load(file)
     return config
 
-
 # Save new user credentials to YAML
 def save_credentials(new_user):
     with open('config.yaml', 'r') as file:
@@ -111,17 +110,12 @@ def user_login():
     username, auth_status, email = authenticator.login(location='main', key='user_login')
 
     if auth_status:
-       if username in config['credentials']['usernames']:
-           user_role = config['credentials']['usernames'][username]['role']
-          
-    else:
-        st.error(f"User '{username}' not found.")
-            if user_role == 'user':
-                st.session_state['username'] = username  # Store the username in the session state
-                dashboard()
-            else:
-                st.error("Access denied.")
-    
+        user_role = config['credentials']['usernames'][username]['role']
+        if user_role == 'user':
+            st.session_state['username'] = username  # Store the username in the session state
+            dashboard()
+        else:
+            st.error("Access denied.")
     elif auth_status is False:
         st.error("ERROR: Invalid credentials.")
     elif auth_status is None:
