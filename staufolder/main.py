@@ -34,22 +34,34 @@ def load_credentials():
         st.error("Configuration file not found. Please upload 'config.yaml'.")
         return None
 
+# Provide a way to upload the configuration file
+def upload_config_file():
+    uploaded_file = st.file_uploader("Please upload your 'config.yaml' file", type=['yaml', 'yml'])
+    if uploaded_file is not None:
+        with open('config.yaml', 'wb') as f:
+            f.write(uploaded_file.getbuffer())
+        st.success("Configuration file uploaded successfully!")
+        st.experimental_rerun()
 
 # Save new user credentials to YAML
 def save_credentials(new_user):
-    with open('config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
+    config_file_path = os.path.join(os.getcwd(), 'config.yaml')
+    try:
+        with open(config_file_path, 'r') as file:
+            config = yaml.safe_load(file)
 
-    for username, user_info in new_user.items():
-        config['credentials']['usernames'][username] = {
-            'mail': user_info['mail'],
-            'password': user_info['password'],
-            'role': user_info['role'],
-            'name': username  # Store the username as the 'name' key
-        }
+        for username, user_info in new_user.items():
+            config['credentials']['usernames'][username] = {
+                'mail': user_info['mail'],
+                'password': user_info['password'],
+                'role': user_info['role'],
+                'name': username  # Store the username as the 'name' key
+            }
 
-    with open('config.yaml', 'w') as file:
-        yaml.dump(config, file)
+        with open(config_file_path, 'w') as file:
+            yaml.dump(config, file)
+    except FileNotFoundError:
+        st.error("Configuration file not found. Unable to save new user credentials.")
 
 # Save data to Excel
 def save_data_to_excel(name, choice):
@@ -80,6 +92,10 @@ def admin_login():
     st.sidebar.subheader("Admin Login")
 
     config = load_credentials()
+    if config is None:
+        upload_config_file()  # Allow user to upload config file
+        return  # Exit if config is not loaded
+
     authenticator = stauth.Authenticate(
         config['credentials'],
         config['cookie']['name'],
@@ -87,7 +103,6 @@ def admin_login():
         config['cookie']['expiry_days']
     )
 
-    # Corrected login call: no additional string before 'location'
     name, auth_status, email = authenticator.login(location='sidebar', key='admin_login')
 
     if auth_status:
@@ -106,6 +121,10 @@ def user_login():
     st.sidebar.subheader("User Login")
 
     config = load_credentials()
+    if config is None:
+        upload_config_file()  # Allow user to upload config file
+        return  # Exit if config is not loaded
+
     authenticator = stauth.Authenticate(
         config['credentials'],
         config['cookie']['name'],
@@ -175,6 +194,10 @@ def signup():
     if st.button("Sign Up"):
         if email and password and name:
             users = load_credentials()
+            if users is None:
+                upload_config_file()  # Allow user to upload config file
+                return  # Exit if config is not loaded
+
             if name in users['credentials']['usernames']:
                 st.error("Username already exists!")
             else:
