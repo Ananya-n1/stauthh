@@ -25,9 +25,15 @@ def landing():
 
 # Load credentials from YAML
 def load_credentials():
-    with open('staufolder/config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-    return config
+    config_file_path = os.path.join(os.getcwd(), 'config.yaml')
+    try:
+        with open(config_file_path, 'r') as file:
+            config = yaml.safe_load(file)
+        return config
+    except FileNotFoundError:
+        st.error("Configuration file not found. Please upload 'config.yaml'.")
+        return None
+
 
 # Save new user credentials to YAML
 def save_credentials(new_user):
