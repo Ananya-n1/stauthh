@@ -5,7 +5,7 @@ import streamlit_authenticator as stauth
 import pandas as pd
 from openpyxl import load_workbook
 import os
-
+import requests
 # Initialize session state
 if 'in_session' not in st.session_state:
     st.session_state.in_session = False
@@ -22,6 +22,9 @@ def landing():
         user_login()
     elif option == 'User Signup':
         signup()
+    elif option == 'IP Webcam Stream':
+        ip_webcam_stream()
+
 
 # Load credentials from YAML
 def load_credentials():
@@ -216,6 +219,31 @@ def signup():
                 st.success("Registration Successful. You can now login.")
         else:
             st.error("Please enter all the details.")
+
+# Your existing functions (admin_login, user_login, etc.) remain unchanged
+
+def ip_webcam_stream():
+    st.title("IP Webcam Stream")
+
+    # IP Address of the phone running the IP Webcam app
+    ip_address = "192.168.29.156"  # Use the IP you provided
+    camera_url = f"http://{ip_address}:8080/video"
+
+    if st.button('Start Stream'):
+        st.write("Fetching video from mobile...")
+
+        # Try to fetch the video stream from the phone's IP Webcam app
+        try:
+            # Make a request to check if the camera URL is working
+            video_feed = requests.get(camera_url, stream=True)
+
+            if video_feed.status_code == 200:
+                # Display the stream within the app
+                st.video(camera_url)
+            else:
+                st.error(f"Error fetching video stream. Status code: {video_feed.status_code}")
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 # Main execution
 if __name__ == "__main__":
