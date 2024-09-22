@@ -4,4 +4,4 @@ bcrypt
 pyyaml
 pandas
 openpyxl
-
+requests
